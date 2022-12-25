@@ -23,6 +23,10 @@ MongoClient.connect(
       console.log(user);
     });
 
+    db.collection('users').find({ age: 27 }).toArray((error, users)=>{
+         console.log(users)
+    })
+
     // db.collection("users").insertOne(
     //   {
     //     _id: id,
