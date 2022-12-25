@@ -23,9 +23,17 @@ MongoClient.connect(
       console.log(user);
     });
 
-    db.collection('users').find({ age: 27 }).toArray((error, users)=>{
-         console.log(users)
-    })
+    db.collection("users")
+      .find({ age: 27 })
+      .toArray((error, users) => {
+        console.log(users);
+      });
+
+    db.collection("users")
+      .find({ age: 27 })
+      .count((error, count) => {
+        console.log(count);
+      });
 
     // db.collection("users").insertOne(
     //   {
@@ -74,5 +82,11 @@ MongoClient.connect(
     //     }
     //     console.log(result.insertedIds)
     // })
+    db.collection("tasks").findOne(
+      { _id: new ObjectID("63a88d23a55fef73056c62ba") },
+      (error, task) => {
+        console.log(task);
+      }
+    );
   }
 );
