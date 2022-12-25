@@ -88,5 +88,11 @@ MongoClient.connect(
         console.log(task);
       }
     );
+
+    db.collection("tasks")
+      .find({ completed: false })
+      .toArray((err, tasks) => {
+        console.log("incompleted tasks", tasks);
+      });
   }
 );
