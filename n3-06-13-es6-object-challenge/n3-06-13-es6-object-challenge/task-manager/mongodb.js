@@ -96,21 +96,39 @@ MongoClient.connect(
     //     console.log("incompleted tasks", tasks);
     //   });
 
-    const updatePromise = db.collection("users").updateOne(
-      {
-        _id: new ObjectID("63a86d32c9a8b6a586bb02b8"),
-      },
-      {
-        $inc: {
-          age: 1,
-        },
-      }
-    );
+    // const updatePromise = db.collection("users").updateOne(
+    //   {
+    //     _id: new ObjectID("63a86d32c9a8b6a586bb02b8"),
+    //   },
+    //   {
+    //     $inc: {
+    //       age: 1,
+    //     },
+    //   }
+    // );
 
-    updatePromise.then((result)=>{
-      console.log('result',result)
-    }).catch((error)=>{
-      console.log('error',error)
-    })
+    // updatePromise.then((result)=>{
+    //   console.log('result',result)
+    // }).catch((error)=>{
+    //   console.log('error',error)
+    // })
+
+    db.collection("tasks")
+      .updateMany(
+        {
+          completed: false,
+        },
+        {
+          $set: {
+            completed: true,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result.modifiedCount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 );
