@@ -16,24 +16,24 @@ MongoClient.connect(
 
     const db = client.db(databaseName);
 
-    db.collection("users").findOne({ name: "jen", age: 1 }, (error, user) => {
-      if (error) {
-        return console.log("unable to fetch");
-      }
-      console.log(user);
-    });
+    // db.collection("users").findOne({ name: "jen", age: 1 }, (error, user) => {
+    //   if (error) {
+    //     return console.log("unable to fetch");
+    //   }
+    //   console.log(user);
+    // });
 
-    db.collection("users")
-      .find({ age: 27 })
-      .toArray((error, users) => {
-        console.log(users);
-      });
+    // db.collection("users")
+    //   .find({ age: 27 })
+    //   .toArray((error, users) => {
+    //     console.log(users);
+    //   });
 
-    db.collection("users")
-      .find({ age: 27 })
-      .count((error, count) => {
-        console.log(count);
-      });
+    // db.collection("users")
+    //   .find({ age: 27 })
+    //   .count((error, count) => {
+    //     console.log(count);
+    //   });
 
     // db.collection("users").insertOne(
     //   {
@@ -82,17 +82,35 @@ MongoClient.connect(
     //     }
     //     console.log(result.insertedIds)
     // })
-    db.collection("tasks").findOne(
-      { _id: new ObjectID("63a88d23a55fef73056c62ba") },
-      (error, task) => {
-        console.log(task);
+
+    // db.collection("tasks").findOne(
+    //   { _id: new ObjectID("63a88d23a55fef73056c62ba") },
+    //   (error, task) => {
+    //     console.log(task);
+    //   }
+    // );
+
+    // db.collection("tasks")
+    //   .find({ completed: false })
+    //   .toArray((err, tasks) => {
+    //     console.log("incompleted tasks", tasks);
+    //   });
+
+    const updatePromise = db.collection("users").updateOne(
+      {
+        _id: new ObjectID("63a86d32c9a8b6a586bb02b8"),
+      },
+      {
+        $inc: {
+          age: 1,
+        },
       }
     );
 
-    db.collection("tasks")
-      .find({ completed: false })
-      .toArray((err, tasks) => {
-        console.log("incompleted tasks", tasks);
-      });
+    updatePromise.then((result)=>{
+      console.log('result',result)
+    }).catch((error)=>{
+      console.log('error',error)
+    })
   }
 );
