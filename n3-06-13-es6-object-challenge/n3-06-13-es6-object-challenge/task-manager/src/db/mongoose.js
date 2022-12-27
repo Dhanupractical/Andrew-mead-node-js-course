@@ -4,16 +4,20 @@ const validator = require("validator")
 mongoose.connect("mongodb://127.0.0.1:27017/task-manager-api-test", {
   useNewUrlParser: true,
   useCreateIndex: true,
+  useUnifiedTopology: true
 });
 
 const UserNew = mongoose.model('UserNew', {
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
+    trim: true,
+    lowercase: true,
     validate(value){
        if (!validator.isEmail(value)){
             throw new Error('Email is invalid')
@@ -22,6 +26,7 @@ const UserNew = mongoose.model('UserNew', {
   },
   age: {
     type: Number,
+    default: 0,
     validate(value) {
       if (value < 0) {
           throw new Error('Age must be a positive number')
@@ -31,12 +36,12 @@ const UserNew = mongoose.model('UserNew', {
 })
 
 const meNew = new UserNew({
-  name: 'Dhananjaya',
-  email: 'mike@'
+  name: '   Dhananjaya   ',
+  email: 'mike@gmail.com   '
 })
 
 meNew.save().then(()=>{
-  console.log(me)
+  console.log(meNew)
 }).catch((err)=>{
   console.log(err)
 })
