@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Dhanupractical/Andrew-mead-node-js-course#readme",
   "dependencies": {
-    "hbs": "^4.0.1"
+    "hbs": "^4.0.1",
+    "nodemon": "^2.0.20"
   }
 }
