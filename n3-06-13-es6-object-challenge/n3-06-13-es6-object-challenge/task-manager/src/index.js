@@ -9,15 +9,6 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-app.post('/tasks', (req, res)=>{
-   const task = new Task(req.body)
-
-   task.save().then(()=>{
-      res.sendStatus(201).send(task)
-   }).catch((e)=>{
-      res.sendStatus(400).send(e)
-   })
-})
 
 app.post('/users', (req, res)=>{
     const user = new User(req.body)
@@ -46,6 +37,39 @@ app.get('/users/:id', (req, res)=>{
         res.sendStatus(500).send(e)
      })
 })
+
+
+app.post('/tasks', (req, res)=>{
+    const task = new Task(req.body)
+ 
+    task.save().then(()=>{
+       res.sendStatus(201).send(task)
+    }).catch((e)=>{
+       res.sendStatus(400).send(e)
+    })
+ })
+
+ app.get('/tasks', (req, res)=>{
+    Task.find({}).then((tasks)=>{
+        res.send(tasks)
+    }).catch((e)=>{
+        res.sendStatus(500).send()
+    })
+ })
+
+ app.get('/tasks/:id', (req, res)=>{
+    const _id = req.params.id
+
+    Task.findById(_id).then((tasks)=>{
+        if(!tasks){
+            return res.status(404).send()
+        }
+        console.log(tasks)
+        res.status(200).send(tasks)
+    }).catch((e)=>{
+        // res.sendStatus(500).send(e) 
+    })
+ })
 
 app.listen(port, ()=>{
     console.log('server is up on port '+ port)
